@@ -21,6 +21,8 @@ public abstract class Unit {
     private int health = constitutionMultiplier * constitution;
     private int mana = willpower * willpowerMultiplier;
 
+    private boolean alive = true;
+
     abstract void setInitialAbilities();
     abstract void setUnitName();
 
@@ -108,6 +110,10 @@ public abstract class Unit {
         this.health = constitutionMultiplier * constitution;
     }
 
+    public void subtractHealth(int healthToSubtract){
+        this.health -= healthToSubtract;
+    }
+
     public int getMana() {
         return mana;
     }
@@ -122,5 +128,20 @@ public abstract class Unit {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public boolean checkAlive(){
+        if(getHealth() <=0){
+            setAlive(false);
+        }
+        return this.isAlive();
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }

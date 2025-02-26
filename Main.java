@@ -1,14 +1,12 @@
 
 import java.util.Scanner;
 
-public class Main extends Campaign{
+public class Main {
 
     public static Unit character;
     public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        Campaign campaign = new Campaign();
     
         while(true){
             System.out.println("Main Menu");
@@ -33,6 +31,8 @@ public class Main extends Campaign{
                 System.out.println("Please enter a proper selection!");
             }
         }
+        
+        Campaign campaign = new Campaign(character);
 
         campaign.campaignStart();
     }
