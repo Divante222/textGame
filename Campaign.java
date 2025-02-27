@@ -48,28 +48,29 @@ public class Campaign {
                     //     fightStart = false;
                     // }
                 } else {
+                    System.out.println("\n=======================================================");
                     System.out.println("You win the battle!");
                     fightStart = false;
                     this.routeLevel +=1;
                     System.out.println("new route level " + this.routeLevel);
+                    System.out.println("\n=======================================================\n");
                 }
             }
         }
     }
 
     public void setupCampaign(){
-        System.out.println("This is the route level before new route: " + this.routeLevel);
-        setWeakMonsters(this.routeLevel, monsterEncyclopediaWeak.get(0));
+        setWeakMonsters(monsterEncyclopediaWeak.get(0));
         addMonsterListToEncountered();
     }
     
-    public void setWeakMonsters(int numberOfMonsters, String monster){
-        int randomNumberGenerated = randomNumber.nextInt(numberOfMonsters);
+    public void setWeakMonsters(String monster){
+        // int randomNumberGenerated = randomNumber.nextInt(3);
+        int randomNumberGenerated = 3;
         monsterList.clear();
-        for(int i = randomNumberGenerated; i < numberOfMonsters; i++){
+        for(int i = 0; i < randomNumberGenerated; i++){
             this.monsterList.add(monster);
         }
-        System.out.println("Monsters size list: " + monsterList.size());
     }
 
     public void addMonsterListToEncountered(){
@@ -79,7 +80,6 @@ public class Campaign {
                 this.monsterEncounterd.add(new Goblin());
             }
         }
-        System.out.println("Monsters encounters list size: " + monsterEncounterd.size());
     }
 
     public void setMonsterEncyclopediaWeak(){

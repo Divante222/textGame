@@ -8,15 +8,15 @@ public class CombatChoices{
     List actions = new ArrayList(Arrays.asList("Attack", "Defend", "Run", "Use Ability"));
     
     
-    public List getPlayerCombatChoices(List<Unit> monsterEncounterd, Unit character){
+    public List getPlayerCombatChoices(List<Unit> monsterEncountered, Unit character){
         boolean playerAttacking = true;
-        if(monsterEncounterd.size() == 0){
+        if(monsterEncountered.size() == 0){
             playerAttacking = false;
         } 
         while(playerAttacking){
             int iteration = 1;
             System.out.println("Make your move");
-            System.out.println("\n=======================================================");
+            System.out.println("=======================================================");
             for(Object action : actions){
                 System.out.print(action.toString() + ": " + iteration + "\t");
                 iteration +=1;
@@ -27,11 +27,11 @@ public class CombatChoices{
             System.out.println();
             if(playerCombatChoice.equals("1")){
                 System.out.println("Player is Attacking");
-                int enemyToAttack = selectEnemyNumber(monsterEncounterd.size(), monsterEncounterd) - 1;
-                monsterEncounterd.get(enemyToAttack).subtractHealth(character.getStrength());
-                System.out.println("Player hit " + monsterEncounterd.get(enemyToAttack).getName() + " for " + character.getStrength() + " Damage!");
-                if(monsterEncounterd.get(enemyToAttack).checkAlive() == false){
-                    monsterEncounterd.remove(enemyToAttack);
+                int enemyToAttack = selectEnemyNumber(monsterEncountered.size(), monsterEncountered) - 1;
+                monsterEncountered.get(enemyToAttack).subtractHealth(character.getStrength());
+                System.out.println("Player hit " + monsterEncountered.get(enemyToAttack).getName() + " for " + character.getStrength() + " Damage!");
+                if(monsterEncountered.get(enemyToAttack).checkAlive() == false){
+                    monsterEncountered.remove(enemyToAttack);
                 };
                 playerAttacking = false;
             } else if(playerCombatChoice.equals("2")){
@@ -47,11 +47,10 @@ public class CombatChoices{
                 System.out.println("Please enter a valid selection");
             }
         }
-        System.out.println("I am returning to main campaign");
-        return monsterEncounterd;
+        return monsterEncountered;
     }
 
-    public int selectEnemyNumber(int listSize, List<Unit> monsterEncounterd){
+    public int selectEnemyNumber(int listSize, List<Unit> monsterEncountered){
         int playerChoice;
         while (true) { 
             try {
@@ -61,7 +60,7 @@ public class CombatChoices{
                     break;
                 }
                 System.out.println("Please enter a correct enemy number 1 through " + listSize);
-                listMonstersEncountered(monsterEncounterd);
+                listMonstersEncountered(monsterEncountered);
             } catch (Exception e) {
                 System.out.println("Please enter a valid selection");
             }
@@ -69,15 +68,65 @@ public class CombatChoices{
         return playerChoice;
     }
 
-    public void listMonstersEncountered(List<Unit> monsterEncounterd){
-        for(int i = 0; i < monsterEncounterd.size(); i++){
-            System.out.println(
-                "\n=======================================================\n" +
-                "Enemy number: " + (i + 1) + 
-                "\nEnemy Name: " + monsterEncounterd.get(i).getName() +
-                "\nEnemy Hp: " + monsterEncounterd.get(i).getHealth() +
-                "\n=======================================================\n"
-            );
+    public void listMonstersEncountered(List<Unit> monsterEncountered){
+        Unit unit = new Warriror();
+        List<String> statGettingMethods = new ArrayList<>();
+        statGettingMethods.addAll(Arrays.asList("Enemy Number", "Name", "Hp"));
+
+        List<String> enemyNumberList = new ArrayList<>();
+        List<String> enemyNameList = new ArrayList<>();
+        List<String> enemyHpList = new ArrayList<>();
+
+        List<List<String>> enemyInfo = new ArrayList<>(Arrays.asList(enemyNumberList, enemyNameList, enemyHpList));
+
+        for(int threeStats = 0; threeStats < monsterEncountered.size(); threeStats++){
+            goblinTextSetup(monsterEncountered, statGettingMethods, enemyNumberList, enemyNameList, enemyHpList);
         }
+
+        System.out.println("\nMonsters Encountered");
+        System.out.println("======================================================");
+        for(int i = 0; i < enemyInfo.size(); i++){
+            printEnemyInfo(enemyInfo.get(i));
+        }
+        System.out.println("======================================================\n");
+    }
+    
+    public void printEnemyInfo(List<String> enemyInfoSubList){
+        for(int i = 0; i < enemyInfoSubList.size(); i++){
+            System.out.print(enemyInfoSubList.get(i));
+        }
+        System.out.println();
+    }
+
+    public void goblinTextSetup(List<Unit> monsterEncountered, List<String> statGettingMethods, List<String> enemyNumberList, List<String> enemyNameList, List<String> enemyHpList){
+        // int infoCounter = 0;
+        String stringToAdd;
+        for(int i = 0; i < 3; i++){
+            // System.out.println(statGettingMethods.get(i));
+            switch(statGettingMethods.get(i)){
+                case "Enemy Number": 
+                    stringToAdd = "Enemy Number: " + (i + 1);
+                    for(int spacesToAdd = 0; spacesToAdd < (24 - stringToAdd.length()); spacesToAdd++){
+                        stringToAdd = stringToAdd + " ";
+                    }
+                    enemyNumberList.add(stringToAdd);
+                    break;
+                case "Name":
+                    stringToAdd = "Enemy Name: " + monsterEncountered.get(i).getName();
+                    for(int spacesToAdd = 0; spacesToAdd < (22 - stringToAdd.length()); spacesToAdd++){
+                        stringToAdd = stringToAdd + " ";
+                    }
+                    enemyNameList.add(stringToAdd);
+                    break;
+                case "Hp":
+                    stringToAdd = "Enemy Hp: " + monsterEncountered.get(i).getHealth();
+                    for(int spacesToAdd = 0; spacesToAdd < (28 - stringToAdd.length()); spacesToAdd++){
+                        stringToAdd = stringToAdd + " ";
+                    }
+                    enemyHpList.add(stringToAdd);
+                    break;
+            }
+        }
+        // infoCounter +=1;
     }
 }
