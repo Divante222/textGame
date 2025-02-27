@@ -5,7 +5,7 @@ public class Warriror extends Unit{
     public Warriror() {
         this.setConstitution(5);
         this.setHealth();
-        this.setStrength(5);
+        this.setStrength(1);
     }
 
     @Override

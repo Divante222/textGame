@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class CombatChoices{
     Scanner sc = new Scanner(System.in);
     List actions = new ArrayList(Arrays.asList("Attack", "Defend", "Run", "Use Ability"));
+    Random randomNumber = new Random();
     
     
     public List<Unit> getPlayerCombatChoices(List<Unit> monsterEncountered, Unit character){
@@ -13,35 +15,26 @@ public class CombatChoices{
         if(monsterEncountered.size() == 0){
             playerAttacking = false;
         } 
-        while(playerAttacking){
-            int iteration = 1;
-            System.out.println("Make your move");
-            System.out.println("=======================================================");
-            for(Object action : actions){
-                System.out.print(action.toString() + ": " + iteration + "\t");
-                iteration +=1;
+
+        if(character.isDefending()){
+            if(character.getDefendingTurnCount() == 1){
+                character.setDefending(false);
+                character.setDefendingTurnCount(0);
             }
-            System.out.println("\n=======================================================\n");
-            System.out.print("Selection: ");
-            String playerCombatChoice = sc.nextLine();
-            System.out.println();
+            if(!character.isDefending()){
+                System.out.println("Player is no longer defending!");
+            }
+            character.addToDefendingTurnCount();
+        }
+        while(playerAttacking){
+            String playerCombatChoice = playerCombatText();
             if(playerCombatChoice.equals("1")){
-                System.out.println("Player is Attacking");
-                int enemyToAttack = selectEnemyNumber(monsterEncountered.size(), monsterEncountered) - 1;
-                monsterEncountered.get(enemyToAttack).subtractHealth(character.getStrength());
-                System.out.println("=====================================");
-                System.out.println("Player hit " + monsterEncountered.get(enemyToAttack).getName() + " for " + character.getStrength() + " Damage!");
-                
-                if(monsterEncountered.get(enemyToAttack).checkAlive() == false){
-                    System.out.println(monsterEncountered.get(enemyToAttack).getName() + " Defeated!");
-                    monsterEncountered.remove(enemyToAttack);
-                }
-                System.out.println("=====================================");
-                System.out.println("Press Enter to continue.");
-                String keepGoing = sc.nextLine();
+                monsterEncountered = playerRegularAttack(monsterEncountered, character);
                 playerAttacking = false;
             } else if(playerCombatChoice.equals("2")){
                 System.out.println("Player is Defending");
+                character.setDefending(true);
+                character.setDefendingTurnCount(0);
                 break;
             } else if(playerCombatChoice.equals("3")){
                 System.out.println("Player attempts to Run");
@@ -142,8 +135,7 @@ public class CombatChoices{
         System.out.println("Monsters are Attacking!");
         System.out.println("============================");
         for(Unit monster : monsterEncountered){
-            System.out.println(monster.getName() + " Attacks for " + monster.getStrength() + " Damage!");
-            character.subtractHealth(monster.getStrength());
+            character = isDefending(monster, character);
             if(character.getHealth() <= 0){
                 System.out.println("You Died!");
                 break;
@@ -153,6 +145,73 @@ public class CombatChoices{
         System.out.println("============================");
         System.out.println("Press Enter to continue.");
         sc.nextLine();
+        return character;
+    }
+
+    public String playerCombatText(){
+        int iteration = 1;
+        System.out.println("Make your move");
+        System.out.println("=======================================================");
+        for(Object action : this.actions){
+            System.out.print(action.toString() + ": " + iteration + "\t");
+            iteration +=1;
+        }
+        System.out.println("\n=======================================================\n");
+        System.out.print("Selection: ");
+        String playerCombatChoice = sc.nextLine();
+        System.out.println();
+        return playerCombatChoice;
+    }
+    
+    public List<Unit> playerRegularAttack(List<Unit> monsterEncountered, Unit character){
+        System.out.println("Player is Attacking");
+        int enemyToAttack = selectEnemyNumber(monsterEncountered.size(), monsterEncountered) - 1;
+        monsterEncountered.get(enemyToAttack).subtractHealth(character.getStrength());
+        System.out.println("=====================================");
+        System.out.println("Player hit " + monsterEncountered.get(enemyToAttack).getName() + " for " + character.getStrength() + " Damage!");
+        
+        if(monsterEncountered.get(enemyToAttack).checkAlive() == false){
+            System.out.println(monsterEncountered.get(enemyToAttack).getName() + " Defeated!");
+            monsterEncountered.remove(enemyToAttack);
+        }
+        System.out.println("=====================================");
+        System.out.println("Press Enter to continue.");
+        String keepGoing = sc.nextLine();
+        return monsterEncountered;
+    }
+
+    public Unit isDefending(Unit monster, Unit character){
+        if(character.isDefending()){
+            character.setBlockChance(monster);
+            character.setParryChance(monster);
+            character.setBlockStrength(monster);
+            if(character.getBlockChance() > randomNumber.nextInt(100)){
+                if(character.getParryChance() > randomNumber.nextInt(100)){
+                    System.out.println("Parried no damage taken!");
+                    monster.setParried(true);
+                } else {
+                    if((character.getBlockStrength() - monster.getStrength()) > 0){
+                        // System.out.println("Blocked some damage!");
+                        int damageDelt = character.getBlockStrength() - monster.getStrength();
+                        if(damageDelt < 0){
+                            character.subtractHealth(damageDelt * -1);
+                            System.out.println(monster.getName() + " Attacks for " + damageDelt + " Damage!");
+                        } else {
+                            System.out.println("Blocked no damage dealt!");
+                        }
+                    } else{
+                        System.out.println(monster.getName() + " Attack is blocked!");
+                    }
+                }
+            } else {
+                System.out.println(monster.getName() + " Attacks for " + monster.getStrength() + " Damage!");
+                character.subtractHealth(monster.getStrength());
+            }
+        } else {
+            System.out.println("Isn't defending");
+            System.out.println(monster.getName() + " Attacks for " + monster.getStrength() + " Damage!");
+            character.subtractHealth(monster.getStrength());
+        }
         return character;
     }
 }

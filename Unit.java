@@ -8,6 +8,8 @@ public abstract class Unit {
 
     private String name;
 
+    private int defendingTurnCount = 0;
+
     private int strength = 1; 
     private int dexterity = 1;
     private int constitution = 1;
@@ -15,13 +17,23 @@ public abstract class Unit {
     private int intelligence = 1;
     private int wisdom = 1;
 
+    private double baseBlockChance = 30.0;
+    private double baseParryChance = 50.0;
+    private int baseBlockStrength = 1;
+
+    private int blockStrength = 0;
+    private double blockChance = 0.0;
+    private double parryChance = 0.0;
+
     private int constitutionMultiplier = 2;
     private int willpowerMultiplier = 2;
 
     private int health = constitutionMultiplier * constitution;
     private int mana = willpower * willpowerMultiplier;
-
+    
     private boolean alive = true;
+    private boolean defending = false;
+    private boolean parried = false;
 
     abstract void setInitialAbilities();
     abstract void setUnitName();
@@ -144,4 +156,86 @@ public abstract class Unit {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
+
+    public int getBlockStrength() {
+        return blockStrength;
+    }
+
+    public void setBlockStrength(Unit enemyUnit) {
+        this.blockStrength = (getStrength() - enemyUnit.getStrength()) + baseBlockStrength;
+    }
+
+    public double getBlockChance() {
+        return blockChance;
+    }
+
+    public void setBlockChance(Unit enemyUnit) {
+        this.blockChance = (getDexterity() - enemyUnit.getDexterity()) + baseBlockChance;
+    }
+
+    public double getParryChance() {
+        return parryChance;
+    }
+
+    public void setParryChance(Unit enemyUnit) {
+        this.parryChance = (getStrength() - enemyUnit.getStrength()) + (getDexterity() - enemyUnit.getDexterity()) + this.baseParryChance;
+    }
+
+    public void resetParryChance(){
+        this.parryChance = 0.0;
+    }
+
+    public double getBaseParryChance() {
+        return baseParryChance;
+    }
+
+    public void setBaseParryChance(double baseParryChance) {
+        this.baseParryChance = baseParryChance;
+    }
+
+    public double getBaseBlockChance() {
+        return baseBlockChance;
+    }
+
+    public void setBaseBlockChance(double baseBlockChance) {
+        this.baseBlockChance = baseBlockChance;
+    }
+
+    public int getBaseBlockStrength() {
+        return baseBlockStrength;
+    }
+
+    public void setBaseBlockStrength(int baseBlockStrength) {
+        this.baseBlockStrength = baseBlockStrength;
+    }
+
+    public boolean isDefending() {
+        return defending;
+    }
+
+    public void setDefending(boolean defending) {
+        this.defending = defending;
+    }
+
+    public boolean isParried() {
+        return parried;
+    }
+
+    public void setParried(boolean parried) {
+        this.parried = parried;
+    }
+
+    public int getDefendingTurnCount() {
+        return defendingTurnCount;
+    }
+
+    public void setDefendingTurnCount(int defendingTurnCount) {
+        this.defendingTurnCount = defendingTurnCount;
+    }
+
+    public void addToDefendingTurnCount() {
+        this.defendingTurnCount += 1;
+    }
+
+
 }
