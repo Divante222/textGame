@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Campaign {
 
@@ -17,6 +18,8 @@ public class Campaign {
     public boolean fightStart = true;
 
     public Unit character;
+
+    Scanner sc = new Scanner(System.in);
 
     public Campaign(){
         setMonsterEncyclopediaWeak();
@@ -43,14 +46,30 @@ public class Campaign {
                     combatChoices.listMonstersEncountered(monsterEncountered);
 
                     this.monsterEncountered = combatChoices.getPlayerCombatChoices(monsterEncountered, character);
-
+                    if(monsterEncountered.size() > 0){
+                        character = combatChoices.enemyAttacks(monsterEncountered, character);
+                    } 
+                    
+                    if(character.getHealth() <= 0){
+                        System.out.println("You lose!");
+                        this.routeLevel = 1;
+                        System.out.println("Continue? (Y/N): ");
+                        String playerContinue = sc.nextLine();
+                        if(playerContinue.equals("y") || playerContinue.equals("Y")){
+                            this.fightStart = false;
+                        } else{
+                            System.exit(0);
+                        }
+                    }
                 } else {
-                    System.out.println("\n=======================================================");
+                    System.out.println("=======================================================");
                     System.out.println("You win the battle!");
                     fightStart = false;
                     this.routeLevel +=1;
                     System.out.println("new route level " + this.routeLevel);
-                    System.out.println("\n=======================================================\n");
+                    System.out.println("=======================================================\n");
+                    System.out.println("Press Enter to continue.");
+                    sc.nextLine();
                 }
             }
         }
@@ -62,8 +81,7 @@ public class Campaign {
     }
     
     public void setWeakMonsters(String monster){
-        // int randomNumberGenerated = randomNumber.nextInt(3);
-        int randomNumberGenerated = 3;
+        int randomNumberGenerated = randomNumber.nextInt(4);
         monsterList.clear();
         for(int i = 0; i < randomNumberGenerated; i++){
             this.monsterList.add(monster);
@@ -90,6 +108,4 @@ public class Campaign {
     public void setRouteLevel(int routeLevel) {
         this.routeLevel += routeLevel;
     }
-
-    
 }

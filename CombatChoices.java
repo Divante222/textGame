@@ -29,10 +29,16 @@ public class CombatChoices{
                 System.out.println("Player is Attacking");
                 int enemyToAttack = selectEnemyNumber(monsterEncountered.size(), monsterEncountered) - 1;
                 monsterEncountered.get(enemyToAttack).subtractHealth(character.getStrength());
+                System.out.println("=====================================");
                 System.out.println("Player hit " + monsterEncountered.get(enemyToAttack).getName() + " for " + character.getStrength() + " Damage!");
+                
                 if(monsterEncountered.get(enemyToAttack).checkAlive() == false){
+                    System.out.println(monsterEncountered.get(enemyToAttack).getName() + " Defeated!");
                     monsterEncountered.remove(enemyToAttack);
-                };
+                }
+                System.out.println("=====================================");
+                System.out.println("Press Enter to continue.");
+                String keepGoing = sc.nextLine();
                 playerAttacking = false;
             } else if(playerCombatChoice.equals("2")){
                 System.out.println("Player is Defending");
@@ -54,7 +60,7 @@ public class CombatChoices{
         int playerChoice;
         while (true) { 
             try {
-                System.out.println("Which monster do you want to attack: ");
+                System.out.print("Which monster do you want to attack: ");
                 playerChoice = Integer.parseInt(sc.nextLine());
                 if(playerChoice < listSize + 1 && playerChoice > 0){
                     break;
@@ -130,5 +136,23 @@ public class CombatChoices{
                     break;
             }
         }
+    }
+
+    public Unit enemyAttacks(List<Unit> monsterEncountered, Unit character){
+        System.out.println("Monsters are Attacking!");
+        System.out.println("============================");
+        for(Unit monster : monsterEncountered){
+            System.out.println(monster.getName() + " Attacks for " + monster.getStrength() + " Damage!");
+            character.subtractHealth(monster.getStrength());
+            if(character.getHealth() <= 0){
+                System.out.println("You Died!");
+                break;
+            }
+        }
+        System.out.println("Remaining HP: " + character.getHealth());
+        System.out.println("============================");
+        System.out.println("Press Enter to continue.");
+        sc.nextLine();
+        return character;
     }
 }

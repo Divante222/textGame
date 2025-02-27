@@ -2,6 +2,12 @@ public class Warriror extends Unit{
 
     private String name;
 
+    public Warriror() {
+        this.setConstitution(5);
+        this.setHealth();
+        this.setStrength(5);
+    }
+
     @Override
     void setInitialAbilities() {
         abilities.add("Strong Attack");
