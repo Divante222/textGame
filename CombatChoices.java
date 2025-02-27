@@ -8,7 +8,7 @@ public class CombatChoices{
     List actions = new ArrayList(Arrays.asList("Attack", "Defend", "Run", "Use Ability"));
     
     
-    public List getPlayerCombatChoices(List<Unit> monsterEncountered, Unit character){
+    public List<Unit> getPlayerCombatChoices(List<Unit> monsterEncountered, Unit character){
         boolean playerAttacking = true;
         if(monsterEncountered.size() == 0){
             playerAttacking = false;
@@ -70,24 +70,28 @@ public class CombatChoices{
 
     public void listMonstersEncountered(List<Unit> monsterEncountered){
         Unit unit = new Warriror();
-        List<String> statGettingMethods = new ArrayList<>();
-        statGettingMethods.addAll(Arrays.asList("Enemy Number", "Name", "Hp"));
+        List<String> statNamesToGet = new ArrayList<>();
+        statNamesToGet.addAll(Arrays.asList("Enemy Number", "Name", "Hp"));
 
         List<String> enemyNumberList = new ArrayList<>();
         List<String> enemyNameList = new ArrayList<>();
         List<String> enemyHpList = new ArrayList<>();
 
         List<List<String>> enemyInfo = new ArrayList<>(Arrays.asList(enemyNumberList, enemyNameList, enemyHpList));
-
+        int infoCounter = 0;
         for(int threeStats = 0; threeStats < monsterEncountered.size(); threeStats++){
-            goblinTextSetup(monsterEncountered, statGettingMethods, enemyNumberList, enemyNameList, enemyHpList);
+            goblinTextSetup(infoCounter, monsterEncountered, statNamesToGet, enemyNumberList, enemyNameList, enemyHpList);
+            infoCounter +=1;
         }
 
         System.out.println("\nMonsters Encountered");
         System.out.println("======================================================");
+
+       
         for(int i = 0; i < enemyInfo.size(); i++){
             printEnemyInfo(enemyInfo.get(i));
         }
+
         System.out.println("======================================================\n");
     }
     
@@ -98,28 +102,27 @@ public class CombatChoices{
         System.out.println();
     }
 
-    public void goblinTextSetup(List<Unit> monsterEncountered, List<String> statGettingMethods, List<String> enemyNumberList, List<String> enemyNameList, List<String> enemyHpList){
-        // int infoCounter = 0;
+    public void goblinTextSetup(int infoCounter, List<Unit> monsterEncountered, List<String> statNamesToGet, List<String> enemyNumberList, List<String> enemyNameList, List<String> enemyHpList){
+        
         String stringToAdd;
         for(int i = 0; i < 3; i++){
-            // System.out.println(statGettingMethods.get(i));
-            switch(statGettingMethods.get(i)){
+            switch(statNamesToGet.get(i)){
                 case "Enemy Number": 
-                    stringToAdd = "Enemy Number: " + (i + 1);
+                    stringToAdd = "Enemy Number: " + (infoCounter + 1);
                     for(int spacesToAdd = 0; spacesToAdd < (24 - stringToAdd.length()); spacesToAdd++){
                         stringToAdd = stringToAdd + " ";
                     }
                     enemyNumberList.add(stringToAdd);
                     break;
                 case "Name":
-                    stringToAdd = "Enemy Name: " + monsterEncountered.get(i).getName();
+                    stringToAdd = "Enemy Name: " + monsterEncountered.get(infoCounter).getName();
                     for(int spacesToAdd = 0; spacesToAdd < (22 - stringToAdd.length()); spacesToAdd++){
                         stringToAdd = stringToAdd + " ";
                     }
                     enemyNameList.add(stringToAdd);
                     break;
                 case "Hp":
-                    stringToAdd = "Enemy Hp: " + monsterEncountered.get(i).getHealth();
+                    stringToAdd = "Enemy Hp: " + monsterEncountered.get(infoCounter).getHealth();
                     for(int spacesToAdd = 0; spacesToAdd < (28 - stringToAdd.length()); spacesToAdd++){
                         stringToAdd = stringToAdd + " ";
                     }
@@ -127,6 +130,5 @@ public class CombatChoices{
                     break;
             }
         }
-        // infoCounter +=1;
     }
 }

@@ -13,7 +13,7 @@ public class Campaign {
     public List<String> monsterList = new ArrayList<>();
     public Random randomNumber = new Random();
 
-    public List<Unit> monsterEncounterd = new ArrayList<>();
+    public List<Unit> monsterEncountered = new ArrayList<>();
     public boolean fightStart = true;
 
     public Unit character;
@@ -38,15 +38,12 @@ public class Campaign {
             fightStart = true;
             while(fightStart){
                 
-                if(monsterEncounterd.size() > 0 ){
+                if(monsterEncountered.size() > 0 ){
 
-                    combatChoices.listMonstersEncountered(monsterEncounterd);
+                    combatChoices.listMonstersEncountered(monsterEncountered);
 
-                    monsterEncounterd = combatChoices.getPlayerCombatChoices(monsterEncounterd, character);
-                    System.out.println("The size of the list: " + monsterEncounterd.size());
-                    // if(monsterEncounterd.size() == 0){
-                    //     fightStart = false;
-                    // }
+                    this.monsterEncountered = combatChoices.getPlayerCombatChoices(monsterEncountered, character);
+
                 } else {
                     System.out.println("\n=======================================================");
                     System.out.println("You win the battle!");
@@ -74,10 +71,10 @@ public class Campaign {
     }
 
     public void addMonsterListToEncountered(){
-        this.monsterEncounterd.clear();
+        this.monsterEncountered.clear();
         for(String monster : this.monsterList){
             if(monster.equals("Goblin")){
-                this.monsterEncounterd.add(new Goblin());
+                this.monsterEncountered.add(new Goblin());
             }
         }
     }
