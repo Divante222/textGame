@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Unit {
     List items = new ArrayList<>(Arrays.asList("Potion", "Potion", "Potion"));
-    List abilities = new ArrayList<>(Arrays.asList());
+    List<Ability> abilities = new ArrayList<>(Arrays.asList());
 
     private String name;
 
@@ -19,8 +19,8 @@ public abstract class Unit {
     private int intelligence = 1;
     private int wisdom = 1;
 
-    private double baseBlockChance = 100.0;
-    private double baseParryChance = 0.0;
+    private double baseBlockChance = 30.0;
+    private double baseParryChance = 15.0;
     private int baseBlockStrength = 1;
 
     private int blockStrength = 0;
@@ -37,7 +37,7 @@ public abstract class Unit {
     private boolean defending = false;
     private boolean parried = false;
 
-    abstract void setInitialAbilities();
+    abstract void setInitialAbilities(Campaign campaign);
     abstract void setUnitName();
     abstract void initializeUpperDamageLimit();
 
@@ -79,6 +79,10 @@ public abstract class Unit {
 
     public void setStrength(int strength) {
         this.strength += strength;
+    }
+
+    public void subtractStrength(int strength){
+        this.strength -= strength;
     }
 
     public void setDexterity(int dexterity) {

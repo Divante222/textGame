@@ -6,11 +6,10 @@ import java.util.Scanner;
 
 public class CombatChoices{
     Scanner sc = new Scanner(System.in);
-    List actions = new ArrayList(Arrays.asList("Attack", "Defend", "Use Ability"));
+    List<String> actions = new ArrayList(Arrays.asList("Attack", "Defend", "Use Ability"));
     Random randomNumber = new Random();
     
-    
-    public List<Unit> getPlayerCombatChoices(List<Unit> monsterEncountered, Unit character){
+    public List<Unit> getPlayerCombatChoices(List<Unit> monsterEncountered, Unit character, Campaign campaign){
         boolean playerAttacking = true;
         if(monsterEncountered.size() == 0){
             playerAttacking = false;
@@ -38,6 +37,7 @@ public class CombatChoices{
                 break;
             } else if(playerCombatChoice.equals("3")){
                 System.out.println("Player is using Ability");
+                character.abilities.get(0).AbilityExecution();
                 break;
             } else{
                 System.out.println("Please enter a valid selection");
@@ -163,9 +163,12 @@ public class CombatChoices{
     public List<Unit> playerRegularAttack(List<Unit> monsterEncountered, Unit character){
         System.out.println("Player is Attacking");
         int enemyToAttack = selectEnemyNumber(monsterEncountered.size(), monsterEncountered) - 1;
-        monsterEncountered.get(enemyToAttack).subtractHealth(character.getStrength());
+
+        int damageDealth = randomNumber.nextInt(character.getUpperDamageLimit());
+
+        monsterEncountered.get(enemyToAttack).subtractHealth(damageDealth);
         System.out.println("=====================================");
-        System.out.println("Player hit " + monsterEncountered.get(enemyToAttack).getName() + " for " + character.getStrength() + " Damage!");
+        System.out.println("Player hit " + monsterEncountered.get(enemyToAttack).getName() + " for " + damageDealth + " Damage!");
         
         if(monsterEncountered.get(enemyToAttack).checkAlive() == false){
             System.out.println(monsterEncountered.get(enemyToAttack).getName() + " Defeated!");
@@ -195,14 +198,10 @@ public class CombatChoices{
                     System.out.println(character.getName() + " Block: " + character.getBlockStrength());
 
                     if((character.getBlockStrength() - damageDelt) < 0){
-
-                        
                             character.subtractHealth((character.getBlockStrength() - damageDelt) * -1);
                             System.out.println(monster.getName() + " Attacks for " + ((character.getBlockStrength() - damageDelt) * -1) + " Damage!");
                        
-                    } 
-                    
-                    else{
+                    } else{
                         System.out.println(monster.getName() + " Attack is blocked!");
                     }
                 }

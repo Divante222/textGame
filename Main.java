@@ -11,9 +11,10 @@ public class Main {
         while(true){
             System.out.println("Main Menu");
             System.out.println("Choose your Character");
-            System.out.println("Enter 1 for Warrior\n" +
-            "Enter 2 for Mage\n"+ 
-            "Enter 3 for Archer");
+            System.out.println("Enter 1 for Warrior"); 
+            // +
+            // "Enter 2 for Mage\n"+ 
+            // "Enter 3 for Archer");
             System.out.print("Selection: ");
             String playerSelection = sc.next();
 

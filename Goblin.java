@@ -9,8 +9,9 @@ public class Goblin extends Unit{
     }
 
     @Override
-    void setInitialAbilities() {
-        abilities.add("Sneaky Stab");
+    void setInitialAbilities(Campaign campaign) {
+        // abilities.add("Sneaky Stab");
+        System.out.print("");
     }
 
     @Override

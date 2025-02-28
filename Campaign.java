@@ -19,6 +19,8 @@ public class Campaign {
 
     public Unit character;
 
+    // KeyPressed keyPressed = new KeyPressed();
+
     Scanner sc = new Scanner(System.in);
 
     public Campaign(){
@@ -30,12 +32,11 @@ public class Campaign {
         this.character = character;
     }
 
-
     public void campaignStart(){
         System.out.println("This is the start of a series of 10 fights\n");
         System.out.println("Press enter to continue.");
         sc.nextLine();
-        
+        character.setInitialAbilities(this);
         while (routeLevel < 11) { 
             setupCampaign();
             
@@ -46,7 +47,7 @@ public class Campaign {
 
                     combatChoices.listMonstersEncountered(monsterEncountered);
 
-                    this.monsterEncountered = combatChoices.getPlayerCombatChoices(monsterEncountered, character);
+                    this.monsterEncountered = combatChoices.getPlayerCombatChoices(monsterEncountered, character, this);
                     if(monsterEncountered.size() > 0){
                         character = combatChoices.enemyAttacks(monsterEncountered, character);
                     } 
@@ -54,10 +55,13 @@ public class Campaign {
                     if(character.getHealth() <= 0){
                         System.out.println("You lose!");
                         this.routeLevel = 1;
-                        System.out.println("Continue? (Y/N): ");
+                        System.out.println("Retry? (Y/N): ");
                         String playerContinue = sc.nextLine();
                         if(playerContinue.equals("y") || playerContinue.equals("Y")){
                             this.fightStart = false;
+                            this.routeLevel = 200;
+                            Main main = new Main();
+                            main.main(null);
                         } else{
                             System.exit(0);
                         }
@@ -68,6 +72,7 @@ public class Campaign {
                     fightStart = false;
                     this.routeLevel +=1;
                     System.out.println("new route level " + this.routeLevel);
+                    character.setHealth();
                     System.out.println("=======================================================\n");
                     System.out.println("Press Enter to continue.");
                     sc.nextLine();
@@ -82,7 +87,7 @@ public class Campaign {
     }
     
     public void setWeakMonsters(String monster){
-        int randomNumberGenerated = randomNumber.nextInt(4);
+        int randomNumberGenerated = 1 + randomNumber.nextInt(3);
         monsterList.clear();
         for(int i = 0; i < randomNumberGenerated; i++){
             this.monsterList.add(monster);

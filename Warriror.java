@@ -11,8 +11,8 @@ public class Warriror extends Unit{
     }
 
     @Override
-    void setInitialAbilities() {
-        abilities.add("Strong Attack");
+    void setInitialAbilities(Campaign campaign) {
+        abilities.add(new Ability(campaign, "Strong Attack"));
     }
 
     @Override
@@ -33,5 +33,42 @@ public class Warriror extends Unit{
     @Override
     void initializeUpperDamageLimit() {
         this.setUpperDamageLimit(3 + getStrength());
+    }
+}
+
+class Ability{
+
+    Campaign campaign;
+    private String name;
+
+    Ability(Campaign campaign, String abilityName){
+        this.campaign = campaign;
+        this.name = abilityName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void AbilityExecution(){
+        switch(this.getName()){
+            case "Strong Attack":{
+                strongAttackExecution();
+                break;
+            }
+        }
+    }
+
+    public void strongAttackExecution(){
+        System.out.println("Strong Attack!");
+        campaign.character.setStrength(7);
+        campaign.character.initializeUpperDamageLimit();
+        campaign.combatChoices.playerRegularAttack(campaign.monsterEncountered, campaign.character);
+        campaign.character.subtractStrength(7);
+        campaign.character.initializeUpperDamageLimit();
     }
 }
