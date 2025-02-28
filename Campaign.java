@@ -79,6 +79,9 @@ public class Campaign {
                 }
             }
         }
+        if(routeLevel >=10){
+            System.out.println("You Win!");
+        }
     }
 
     public void setupCampaign(){
