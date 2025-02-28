@@ -6,6 +6,8 @@ public class Warriror extends Unit{
         this.setConstitution(5);
         this.setHealth();
         this.setStrength(1);
+        setUnitName();
+        initializeUpperDamageLimit();
     }
 
     @Override
@@ -26,5 +28,10 @@ public class Warriror extends Unit{
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    void initializeUpperDamageLimit() {
+        this.setUpperDamageLimit(3 + getStrength());
     }
 }

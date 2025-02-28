@@ -33,8 +33,9 @@ public class Campaign {
 
     public void campaignStart(){
         System.out.println("This is the start of a series of 10 fights\n");
+        System.out.println("Press enter to continue.");
+        sc.nextLine();
         
-        System.out.println("You encounterd some monsters");
         while (routeLevel < 11) { 
             setupCampaign();
             

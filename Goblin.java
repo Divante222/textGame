@@ -5,6 +5,7 @@ public class Goblin extends Unit{
     public Goblin(){
         setConstitution(3);
         setUnitName();
+        initializeUpperDamageLimit();
     }
 
     @Override
@@ -25,5 +26,10 @@ public class Goblin extends Unit{
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    void initializeUpperDamageLimit() {
+        this.setUpperDamageLimit(3 + getStrength());
     }
 }

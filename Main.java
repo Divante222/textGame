@@ -18,15 +18,33 @@ public class Main {
             String playerSelection = sc.next();
 
             if(playerSelection.equals("1")){
+                System.out.println("\n====================");
                 System.out.println("You choose Warrior!");
+                System.out.println("====================\n");
                 character = new Warriror();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                }
                 break;
             } else if(playerSelection.equals("2")){
+                System.out.println("\n====================");
                 System.out.println("You choose Mage!");
-                break;
+                System.out.println("Coming soon!");
+                System.out.println("====================\n");
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                }
             } else if(playerSelection.equals("3")){
+                System.out.println("\n====================");
                 System.out.println("You choose Archer");
-                break;
+                System.out.println("Coming soon!");
+                System.out.println("====================\n");
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                }
             } else{
                 System.out.println("Please enter a proper selection!");
             }

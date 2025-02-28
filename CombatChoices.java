@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class CombatChoices{
     Scanner sc = new Scanner(System.in);
-    List actions = new ArrayList(Arrays.asList("Attack", "Defend", "Run", "Use Ability"));
+    List actions = new ArrayList(Arrays.asList("Attack", "Defend", "Use Ability"));
     Random randomNumber = new Random();
     
     
@@ -37,9 +37,6 @@ public class CombatChoices{
                 character.setDefendingTurnCount(0);
                 break;
             } else if(playerCombatChoice.equals("3")){
-                System.out.println("Player attempts to Run");
-                break;
-            } else if(playerCombatChoice.equals("4")){
                 System.out.println("Player is using Ability");
                 break;
             } else{
@@ -185,33 +182,42 @@ public class CombatChoices{
             character.setBlockChance(monster);
             character.setParryChance(monster);
             character.setBlockStrength(monster);
+
+            int damageDelt = randomNumber.nextInt(monster.getUpperDamageLimit());
+            System.out.println("-----------------------");
             if(character.getBlockChance() > randomNumber.nextInt(100)){
                 if(character.getParryChance() > randomNumber.nextInt(100)){
                     System.out.println("Parried no damage taken!");
                     monster.setParried(true);
                 } else {
-                    if((character.getBlockStrength() - monster.getStrength()) > 0){
-                        // System.out.println("Blocked some damage!");
-                        int damageDelt = character.getBlockStrength() - monster.getStrength();
-                        if(damageDelt < 0){
-                            character.subtractHealth(damageDelt * -1);
-                            System.out.println(monster.getName() + " Attacks for " + damageDelt + " Damage!");
-                        } else {
-                            System.out.println("Blocked no damage dealt!");
-                        }
-                    } else{
+
+                    System.out.println(monster.getName() + " Damage: " + damageDelt);
+                    System.out.println(character.getName() + " Block: " + character.getBlockStrength());
+
+                    if((character.getBlockStrength() - damageDelt) < 0){
+
+                        
+                            character.subtractHealth((character.getBlockStrength() - damageDelt) * -1);
+                            System.out.println(monster.getName() + " Attacks for " + ((character.getBlockStrength() - damageDelt) * -1) + " Damage!");
+                       
+                    } 
+                    
+                    else{
                         System.out.println(monster.getName() + " Attack is blocked!");
                     }
                 }
             } else {
-                System.out.println(monster.getName() + " Attacks for " + monster.getStrength() + " Damage!");
-                character.subtractHealth(monster.getStrength());
+                System.out.println(monster.getName() + " Attacks for " + damageDelt + " Damage!");
+                character.subtractHealth(damageDelt);
             }
         } else {
             System.out.println("Isn't defending");
             System.out.println(monster.getName() + " Attacks for " + monster.getStrength() + " Damage!");
             character.subtractHealth(monster.getStrength());
         }
+        System.out.println("-----------------------");
+        System.out.println("Press Enter to continue.");
+        sc.nextLine();
         return character;
     }
 }

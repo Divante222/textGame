@@ -10,6 +10,8 @@ public abstract class Unit {
 
     private int defendingTurnCount = 0;
 
+
+    private int upperDamageLimit;
     private int strength = 1; 
     private int dexterity = 1;
     private int constitution = 1;
@@ -17,8 +19,8 @@ public abstract class Unit {
     private int intelligence = 1;
     private int wisdom = 1;
 
-    private double baseBlockChance = 30.0;
-    private double baseParryChance = 50.0;
+    private double baseBlockChance = 100.0;
+    private double baseParryChance = 0.0;
     private int baseBlockStrength = 1;
 
     private int blockStrength = 0;
@@ -37,6 +39,7 @@ public abstract class Unit {
 
     abstract void setInitialAbilities();
     abstract void setUnitName();
+    abstract void initializeUpperDamageLimit();
 
     public void addItem(String itemToAdd){
         items.add(itemToAdd);
@@ -237,5 +240,11 @@ public abstract class Unit {
         this.defendingTurnCount += 1;
     }
 
+    public int getUpperDamageLimit() {
+        return upperDamageLimit;
+    }
 
+    public void setUpperDamageLimit(int upperDamageLimit) {
+        this.upperDamageLimit = upperDamageLimit;
+    }
 }
