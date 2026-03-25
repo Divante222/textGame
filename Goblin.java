@@ -6,6 +6,7 @@ public class Goblin extends Unit{
         setConstitution(3);
         setUnitName();
         initializeUpperDamageLimit();
+        setExperience(100);
     }
 
     @Override

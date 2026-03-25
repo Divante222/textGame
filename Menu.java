@@ -28,11 +28,12 @@ public class Menu {
                             System.out.println("Stats");
                             System.out.println("=======================================================\n");
                             System.out.println("Strength:: " + character.getStrength());
-                            System.out.println("Dexterit:: " + character.getDexterity());
+                            System.out.println("Dexterity:: " + character.getDexterity());
                             System.out.println("Constitution:: " + character.getConstitution());
                             System.out.println("Willpower:: " + character.getWillpower());
                             System.out.println("Intelligence:: " + character.getIntelligence());
                             System.out.println("Wisdom:: " + character.getWisdom());
+                            System.out.println("Experience:: " + character.getExperience());
                             System.out.println("\n=======================================================\n");
                             System.out.println("Press enter to continue...");
                             sc.nextLine();

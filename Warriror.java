@@ -8,6 +8,8 @@ public class Warriror extends Unit{
         this.setStrength(1);
         setUnitName();
         initializeUpperDamageLimit();
+        setExperienceThreshold(100);
+        setLevel(1);
     }
 
     @Override

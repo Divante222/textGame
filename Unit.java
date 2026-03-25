@@ -7,9 +7,12 @@ public abstract class Unit {
     List<Ability> abilities = new ArrayList<>(Arrays.asList());
 
     private String name;
+    private int experience = 0;
+    private int experienceThreshold;
+    private int level;
+    private int abilityPoints;
 
     private int defendingTurnCount = 0;
-
 
     private int upperDamageLimit;
     private int strength = 1; 
@@ -77,6 +80,10 @@ public abstract class Unit {
         return wisdom;
     }
 
+    public int getExperience(){
+        return experience;
+    }
+
     public void setStrength(int strength) {
         this.strength += strength;
     }
@@ -90,7 +97,7 @@ public abstract class Unit {
     }
 
     public void setConstitution(int constitution) {
-        this.constitution += constitution;
+        this.constitution = constitution;
     }
 
     public void setWillpower(int willpower) {
@@ -141,6 +148,10 @@ public abstract class Unit {
         this.mana = willpower * willpowerMultiplier;
     }
 
+    public void addExperience(int experienceAmount){
+        this.experience += experienceAmount;
+    }
+
     public String getName() {
         return name;
     }
@@ -151,6 +162,10 @@ public abstract class Unit {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public void setExperience(int experienceAmount){
+        this.experience = experienceAmount;
     }
 
     public boolean checkAlive(){
@@ -250,5 +265,29 @@ public abstract class Unit {
 
     public void setUpperDamageLimit(int upperDamageLimit) {
         this.upperDamageLimit = upperDamageLimit;
+    }
+
+    public int getExperienceThreshold() {
+        return experienceThreshold;
+    }
+
+    public void setExperienceThreshold(int experienceThreshold) {
+        this.experienceThreshold = experienceThreshold;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getAbilityPoints() {
+        return abilityPoints;
+    }
+
+    public void setAbilityPoints(int abilityPoints) {
+        this.abilityPoints = abilityPoints;
     }
 }

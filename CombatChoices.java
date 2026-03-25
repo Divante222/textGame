@@ -176,7 +176,17 @@ public class CombatChoices{
         System.out.println("Player hit " + monsterEncountered.get(enemyToAttack).getName() + " for " + damageDealth + " Damage!");
         
         if(monsterEncountered.get(enemyToAttack).checkAlive() == false){
-            System.out.println(monsterEncountered.get(enemyToAttack).getName() + " Defeated!");
+
+            System.out.println("\n" + monsterEncountered.get(enemyToAttack).getName() + " Defeated!");
+            System.out.println("\nYou gain " + monsterEncountered.get(enemyToAttack).getExperience() + " Experience points!");
+            character.addExperience(monsterEncountered.get(enemyToAttack).getExperience());
+
+            if(character.getExperience() >= character.getExperienceThreshold()){
+                character.setExperience(character.getExperience() - 100);
+                character.setLevel(character.getLevel() + 1);
+                System.out.println("Congratulations! You have reaches level : " + character.getLevel());
+            }
+            
             monsterEncountered.remove(enemyToAttack);
         }
         System.out.println("=====================================");
