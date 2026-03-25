@@ -41,8 +41,11 @@ public class CombatChoices{
                 break;
             } else if(playerCombatChoice.equals("4")){
                 Menu.menuInCombat(character, sc);
+            } else if (playerCombatChoice.equals("5")){
+                Menu.shopMenuAfterLevel(character, sc);
             } else{
-                System.out.println("Please enter a valid selection");
+                CommonText.enterValidSelection();
+                sc.nextLine();
             }
         }
         return monsterEncountered;

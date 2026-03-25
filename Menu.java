@@ -1,17 +1,24 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
 
+    public static void defaultSelectionMenu(List<String> menuOptions){
+        int iteration = 1;
+        System.out.println("Menu");
+        System.out.println("=======================================================\n");
+        for(String menuOption : menuOptions){
+            System.out.println(menuOption + "::" + iteration + "\n");
+            iteration +=1;
+        }
+        System.out.println("=======================================================\n");
+    }
+
+
     public static void menuInCombat(Unit character, Scanner sc){
         String menuSelection = "";
                 while(menuSelection != "Exit"){
-                    System.out.println("Menu");
-                    System.out.println("=======================================================\n");
-                    System.out.println("Inventory::1\n");
-                    System.out.println("Stats::2\n");
-                    System.out.println("Equipment::3\n");
-                    System.out.println("Exit::4\n");
-                    System.out.println("=======================================================\n");
+                    defaultSelectionMenu(List.of("Inventory", "Stats", "Equipment", "Exit"));
                     menuSelection = sc.nextLine();
                     switch(menuSelection) {
                         case "1":
@@ -37,13 +44,37 @@ public class Menu {
                             menuSelection = "Exit";
                             break;
                         default:
-                            System.out.println("\n-------------------------------------------------------\n");
-                            System.out.println("Please enter a valid selection!");
-                            System.out.println("\n-------------------------------------------------------\n");
-                            System.out.println("Press Enter to continue...");
+                            CommonText.enterValidSelection();
                             sc.nextLine();
                     }
                 }
+    }
+
+    public static void shopMenuAfterLevel(Unit character, Scanner sc){
+
+        Boolean stillShopping = true;
+
+        while(stillShopping == true){
+            defaultSelectionMenu(List.of("Buy", "Sell", "Exit"));
+
+            String playerSelection = sc.nextLine();
+            switch (playerSelection) {
+                case "1":
+                    System.out.println("comming sooon");
+                    break;
+                case "2":  
+                    System.out.println("comming sooon");
+                    break;
+                case "3":
+                    System.out.println("comming sooon");
+                    stillShopping = false;
+                    break;
+                default:
+                    CommonText.enterValidSelection();
+                    sc.nextLine();
+            }
+        }
+        
     }
     
 }
