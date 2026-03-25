@@ -5,11 +5,12 @@ public class Warriror extends Unit{
     public Warriror() {
         this.setConstitution(5);
         this.setHealth();
-        this.setStrength(1);
+        this.setStrength(2);
         setUnitName();
         initializeUpperDamageLimit();
         setExperienceThreshold(100);
         setLevel(1);
+        setAbilityPoints(1);
     }
 
     @Override

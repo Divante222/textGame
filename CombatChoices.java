@@ -9,7 +9,7 @@ public class CombatChoices{
     List<String> actions = new ArrayList(Arrays.asList("Attack", "Defend", "Use Ability", "Menu"));
     Random randomNumber = new Random();
     
-    public List<Unit> getPlayerCombatChoices(List<Unit> monsterEncountered, Unit character, Campaign campaign){
+    public List<Unit> getPlayerCombatChoices(List<Unit> monsterEncountered, Unit character, Campaign campaign, CombatChoices combatChoices){
         boolean playerAttacking = true;
         if(monsterEncountered.size() == 0){
             playerAttacking = false;
@@ -41,6 +41,7 @@ public class CombatChoices{
                 break;
             } else if(playerCombatChoice.equals("4")){
                 Menu.menuInCombat(character, sc);
+                combatChoices.listMonstersEncountered(monsterEncountered);
             } else if (playerCombatChoice.equals("5")){
                 Menu.shopMenuAfterLevel(character, sc);
             } else{
@@ -70,7 +71,6 @@ public class CombatChoices{
     }
 
     public void listMonstersEncountered(List<Unit> monsterEncountered){
-        Unit unit = new Warriror();
         List<String> statNamesToGet = new ArrayList<>();
         statNamesToGet.addAll(Arrays.asList("Enemy Number", "Name", "Hp"));
 

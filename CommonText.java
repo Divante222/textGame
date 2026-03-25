@@ -7,4 +7,8 @@ public class CommonText {
         System.out.println("\n-------------------------------------------------------\n");
         System.out.println("Press Enter to continue...");
     }
+
+    public static void abilityPointInvestmentText(String attributeInvestedInto, String attributeAmount){
+        System.out.println(attributeAmount + " point(s) added to " + attributeInvestedInto);
+    }
 }

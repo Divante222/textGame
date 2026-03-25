@@ -85,7 +85,7 @@ public abstract class Unit {
     }
 
     public void setStrength(int strength) {
-        this.strength += strength;
+        this.strength = strength;
     }
 
     public void subtractStrength(int strength){

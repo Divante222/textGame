@@ -47,7 +47,7 @@ public class Campaign {
 
                     combatChoices.listMonstersEncountered(monsterEncountered);
 
-                    this.monsterEncountered = combatChoices.getPlayerCombatChoices(monsterEncountered, character, this);
+                    this.monsterEncountered = combatChoices.getPlayerCombatChoices(monsterEncountered, character, this, combatChoices);
                     if(monsterEncountered.size() > 0){
                         character = combatChoices.enemyAttacks(monsterEncountered, character);
                     } 
