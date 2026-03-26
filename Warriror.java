@@ -15,8 +15,9 @@ public class Warriror extends Unit{
 
     @Override
     void setInitialAbilities(Campaign campaign) {
-        abilities.add(new Ability(campaign, "Strong Attack"));
-    }
+        campaign.character.abilities.add("Strong Attack");
+        campaign.character.abilities.add("Exit");
+}
 
     @Override
     void setUnitName() {
@@ -35,7 +36,7 @@ public class Warriror extends Unit{
 
     @Override
     void initializeUpperDamageLimit() {
-        this.setUpperDamageLimit(3 + getStrength());
+        this.setUpperDamageLimit(getStrength() * 1.5);
     }
 }
 
@@ -57,21 +58,34 @@ class Ability{
         this.name = name;
     }
 
-    public void AbilityExecution(){
-        switch(this.getName()){
-            case "Strong Attack":{
-                strongAttackExecution();
-                break;
-            }
+    public void setAbilities(){
+        campaign.character.abilities.add("Strong Attack");
+        campaign.character.abilities.add("Exit");
+    }
+
+    public String abilityExecution(String abilityString){
+        while(true){
+            switch(abilityString){
+                case "Strong Attack":
+                    strongAttackExecution();
+                    return "SuccessfulAttack";
+                case "Exit":{
+                    return "Exit";
+                } default:
+                    CommonText.enterValidSelection();
+                    campaign.sc.nextLine();
+                    return "InvalidTryAgain";
+            }  
         }
     }
 
     public void strongAttackExecution(){
-        System.out.println("Strong Attack!");
-        campaign.character.setStrength(7);
+        System.out.println("Used Strong Attack!");
+        int strengthBefore = campaign.character.getStrength();
+        campaign.character.setStrength(campaign.character.getStrength() + (2 * campaign.character.getLevel()));
         campaign.character.initializeUpperDamageLimit();
         campaign.combatChoices.playerRegularAttack(campaign.monsterEncountered, campaign.character);
-        campaign.character.subtractStrength(7);
+        campaign.character.setStrength(strengthBefore);
         campaign.character.initializeUpperDamageLimit();
     }
 }

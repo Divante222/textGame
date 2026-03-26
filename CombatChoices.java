@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class CombatChoices{
     Scanner sc = new Scanner(System.in);
     List<String> actions = new ArrayList(Arrays.asList("Attack", "Defend", "Use Ability", "Menu"));
+
     Random randomNumber = new Random();
     
     public List<Unit> getPlayerCombatChoices(List<Unit> monsterEncountered, Unit character, Campaign campaign, CombatChoices combatChoices){
@@ -36,9 +37,45 @@ public class CombatChoices{
                 character.setDefendingTurnCount(0);
                 break;
             } else if(playerCombatChoice.equals("3")){
-                System.out.println("Player is using Ability");
-                character.abilities.get(0).AbilityExecution();
-                break;
+                String playerUsingAbility = "KeepGoing";
+                while(playerUsingAbility.equals("KeepGoing")){
+
+                    String abilitySelected;
+                    String abilityUsed;
+
+                    while(true){
+                        System.out.println("Player is using Ability");
+                        System.out.println("Select an ability to use: ");
+                        Menu.defaultSelectionMenu(character.abilities);
+                        abilitySelected = sc.nextLine();
+                        try {
+                            abilityUsed = character.abilities.get(Integer.parseInt(abilitySelected) - 1);
+                            break;
+                        } catch (Exception e) {
+                            CommonText.enterValidSelection();
+                            campaign.sc.nextLine();
+                        }
+                    }
+                    
+                    Ability abilityclass = new Ability(campaign, abilityUsed);
+                    combatChoices.listMonstersEncountered(monsterEncountered);
+                    playerUsingAbility = abilityclass.abilityExecution(abilityUsed);
+                    
+
+                    switch (playerUsingAbility) {
+                        case "SuccessfulAttack":
+                            playerAttacking = false;
+                            break;
+                        case "Exit":
+                            combatChoices.listMonstersEncountered(monsterEncountered);
+                            break;
+                        case "InvalidTryAgain":
+                            playerUsingAbility = "KeepGoing";
+                            combatChoices.listMonstersEncountered(monsterEncountered);
+                            break;
+                    }
+                    
+                }
             } else if(playerCombatChoice.equals("4")){
                 Menu.menuInCombat(character, sc);
                 combatChoices.listMonstersEncountered(monsterEncountered);
@@ -48,6 +85,7 @@ public class CombatChoices{
                 CommonText.enterValidSelection();
                 sc.nextLine();
             }
+
         }
         return monsterEncountered;
     }
@@ -56,6 +94,7 @@ public class CombatChoices{
         int playerChoice;
         while (true) { 
             try {
+
                 System.out.print("Which monster do you want to attack: ");
                 playerChoice = Integer.parseInt(sc.nextLine());
                 if(playerChoice < listSize + 1 && playerChoice > 0){
@@ -169,7 +208,13 @@ public class CombatChoices{
         System.out.println("Player is Attacking");
         int enemyToAttack = selectEnemyNumber(monsterEncountered.size(), monsterEncountered) - 1;
 
-        int damageDealth = randomNumber.nextInt(character.getUpperDamageLimit());
+        int damageDealth;
+
+        if(Math.random() > .5){
+            damageDealth = (int) Math.ceil(character.getStrength() + (Math.random() * (character.getUpperDamageLimit() - character.getStrength())));
+        } else{
+            damageDealth = (int) Math.floor(character.getStrength() + (Math.random() * (character.getUpperDamageLimit() - character.getStrength())));
+        }
 
         monsterEncountered.get(enemyToAttack).subtractHealth(damageDealth);
         System.out.println("=====================================");

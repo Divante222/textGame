@@ -32,6 +32,6 @@ public class Goblin extends Unit{
 
     @Override
     void initializeUpperDamageLimit() {
-        this.setUpperDamageLimit(3 + getStrength());
+        this.setUpperDamageLimit(getStrength() * 1.5);
     }
 }

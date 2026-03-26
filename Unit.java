@@ -4,7 +4,9 @@ import java.util.List;
 
 public abstract class Unit {
     List items = new ArrayList<>(Arrays.asList("Potion", "Potion", "Potion"));
-    List<Ability> abilities = new ArrayList<>(Arrays.asList());
+    List<String> abilities = new ArrayList<>();
+
+    // List<Ability> abilities = new ArrayList<>(Arrays.asList());
 
     private String name;
     private int experience = 0;
@@ -14,7 +16,7 @@ public abstract class Unit {
 
     private int defendingTurnCount = 0;
 
-    private int upperDamageLimit;
+    private double upperDamageLimit;
     private int strength = 1; 
     private int dexterity = 1;
     private int constitution = 1;
@@ -260,10 +262,10 @@ public abstract class Unit {
     }
 
     public int getUpperDamageLimit() {
-        return upperDamageLimit;
+        return (int) Math.ceil(upperDamageLimit);
     }
 
-    public void setUpperDamageLimit(int upperDamageLimit) {
+    public void setUpperDamageLimit(double upperDamageLimit) {
         this.upperDamageLimit = upperDamageLimit;
     }
 
