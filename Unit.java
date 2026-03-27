@@ -1,12 +1,10 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.TreeMap;
 
 public abstract class Unit {
-    List items = new ArrayList<>(Arrays.asList("Potion", "Potion", "Potion"));
+    TreeMap<String, Integer> items = new TreeMap<>();
     List<String> abilities = new ArrayList<>();
-
-    // List<Ability> abilities = new ArrayList<>(Arrays.asList());
 
     private String name;
     private int experience = 0;
@@ -47,11 +45,14 @@ public abstract class Unit {
     abstract void initializeUpperDamageLimit();
 
     public void addItem(String itemToAdd){
-        items.add(itemToAdd);
+        items.compute(itemToAdd, (key, val) -> (val == null) ? 1 : val + 1);
     };
     
     public void removeItem(String itemToRemove){
-        items.remove(itemToRemove);
+        items.compute(itemToRemove, (key, val) -> (val == null) ? 1 : val - 1);
+        if(items.get(itemToRemove) == 0){
+            items.remove(itemToRemove);
+        }
     }
 
     public void addAbility(String abilityToAdd){

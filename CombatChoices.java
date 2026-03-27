@@ -60,7 +60,6 @@ public class CombatChoices{
                     Ability abilityclass = new Ability(campaign, abilityUsed);
                     combatChoices.listMonstersEncountered(monsterEncountered);
                     playerUsingAbility = abilityclass.abilityExecution(abilityUsed);
-                    
 
                     switch (playerUsingAbility) {
                         case "SuccessfulAttack":
@@ -74,7 +73,6 @@ public class CombatChoices{
                             combatChoices.listMonstersEncountered(monsterEncountered);
                             break;
                     }
-                    
                 }
             } else if(playerCombatChoice.equals("4")){
                 Menu.menuInCombat(character, sc);

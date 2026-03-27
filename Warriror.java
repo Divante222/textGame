@@ -11,6 +11,7 @@ public class Warriror extends Unit{
         setExperienceThreshold(100);
         setLevel(1);
         setAbilityPoints(1);
+        setInitialItems();
     }
 
     @Override
@@ -37,6 +38,10 @@ public class Warriror extends Unit{
     @Override
     void initializeUpperDamageLimit() {
         this.setUpperDamageLimit(getStrength() * 1.5);
+    }
+
+    public void setInitialItems(){
+        this.items.put("potion", 3);
     }
 }
 

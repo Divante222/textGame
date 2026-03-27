@@ -6,10 +6,20 @@ public class Menu {
 
     public static List<String> defaultSelectionMenu(List<String> menuOptions){
         int iteration = 1;
-        System.out.println("Menu");
         System.out.println("=======================================================\n");
         for(String menuOption : menuOptions){
             System.out.println(menuOption + "::" + iteration + "\n");
+            iteration +=1;
+        }
+        System.out.println("=======================================================\n");
+        return menuOptions;
+    }
+
+    public static List<String> defaultSelectionMenuWithValues(List<String> menuOptions, List<Integer> values){
+        int iteration = 0;
+        System.out.println("=======================================================\n");
+        for(String menuOption : menuOptions){
+            System.out.println(menuOption + "::" + values.get(iteration) + "\n");
             iteration +=1;
         }
         System.out.println("=======================================================\n");
@@ -24,7 +34,44 @@ public class Menu {
                     menuSelection = sc.nextLine();
                     switch(menuSelection) {
                         case "1":
-                            System.out.println("Inventory is a work in progress");
+                            while (true) { 
+                                System.out.println("Inventory");
+                                defaultSelectionMenuWithValues(new ArrayList<>(character.items.keySet()), new ArrayList<>(character.items.values()));
+                                String playerItemChoice;
+                                String itemToUse = "";
+
+                                while (true) { 
+                                    System.out.println("Select an Item or enter 0 to exit!");
+                                    playerItemChoice = sc.nextLine();
+                                    if(playerItemChoice.equals("0")){
+                                        itemToUse = "0";
+                                        break;
+                                    }
+                                    try {
+                                        itemToUse = new ArrayList<>(character.items.keySet()).get(Integer.parseInt(playerItemChoice));
+                                        System.out.println("attempting to use " + itemToUse);
+                                        break;
+                                    } catch (Exception e) {
+                                        CommonText.enterValidSelection();
+                                        System.out.println("Press enter to continue...");
+                                        sc.nextLine();
+                                    }
+                                }
+                                if(itemToUse.equals("0")){
+                                    System.out.println("Did not use an item");
+                                    break;
+                                } else if(!character.items.containsKey(itemToUse)){
+                                    CommonText.enterValidSelection();
+                                    System.out.println("Press enter to continue...");
+                                    sc.nextLine();
+                                    continue;
+                                } 
+                                break;
+                            }
+
+
+                            System.out.println("Press enter to continue...");
+                            sc.nextLine();
                             break;
                         case "2":
                             System.out.println("Stats");
@@ -47,7 +94,7 @@ public class Menu {
                         case "4":
                             Boolean continueAtributeSelection = true;
                             while(continueAtributeSelection){
-                                List<String> attributeSelectionList = defaultSelectionMenu(List.of("Strength", "Dexterity", "Constitution", "Willpower", "Intelligence", "Wisdom", "Exit"));
+                                List<String> attributeSelectionList = defaultSelectionMenu(List.of("Strength", "Dexterity", "Constitution", "Willpower", "Intelligence", "Wisdom"));
                                 System.out.println("Amount of ability points: " + character.getAbilityPoints());
 
                                 if(character.getAbilityPoints() == 0){
