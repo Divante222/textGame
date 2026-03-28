@@ -19,12 +19,15 @@ public class Campaign {
 
     public Unit character;
 
+    ItemUsage itemUsage;
+
     // KeyPressed keyPressed = new KeyPressed();
 
     Scanner sc = new Scanner(System.in);
 
     public Campaign(){
         setMonsterEncyclopediaWeak();
+        this.itemUsage = new ItemUsage(this);
     }
 
     public Campaign(Unit character){

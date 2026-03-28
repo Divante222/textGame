@@ -19,15 +19,22 @@ public class Menu {
         int iteration = 0;
         System.out.println("=======================================================\n");
         for(String menuOption : menuOptions){
-            System.out.println(menuOption + "::" + values.get(iteration) + "\n");
+            System.out.println("Number: " + (iteration + 1) + " | " + menuOption + " : amount | " + values.get(iteration) + "\n");
             iteration +=1;
         }
         System.out.println("=======================================================\n");
         return menuOptions;
     }
 
+    public static void showHpAndMana(Campaign campaign){
+        System.out.println("-------------------------------------------------------");
+        System.out.println("Health : " + campaign.character.getHealth() +  "\\" + (campaign.character.getConstitution() * campaign.character.getConstitutionMultiplier()));
+        System.out.println("Mana : " + campaign.character.getMana());
+        System.out.println("-------------------------------------------------------\n");
+    }
 
-    public static void menuInCombat(Unit character, Scanner sc){
+
+    public static void menuInCombat(Unit character, Scanner sc, Campaign campaign){
         String menuSelection = "";
                 while(menuSelection != "Exit"){
                     defaultSelectionMenu(List.of("Inventory", "Stats", "Equipment", "Use Ability Points", "Exit"));
@@ -37,6 +44,7 @@ public class Menu {
                             while (true) { 
                                 System.out.println("Inventory");
                                 defaultSelectionMenuWithValues(new ArrayList<>(character.items.keySet()), new ArrayList<>(character.items.values()));
+                                showHpAndMana(campaign);
                                 String playerItemChoice;
                                 String itemToUse = "";
 
@@ -48,7 +56,10 @@ public class Menu {
                                         break;
                                     }
                                     try {
-                                        itemToUse = new ArrayList<>(character.items.keySet()).get(Integer.parseInt(playerItemChoice));
+                                        itemToUse = new ArrayList<>(character.items.keySet()).get(Integer.parseInt(playerItemChoice) - 1);
+                                        
+                                        campaign.itemUsage.itemInGame.get(itemToUse).run();
+                                        
                                         System.out.println("attempting to use " + itemToUse);
                                         break;
                                     } catch (Exception e) {

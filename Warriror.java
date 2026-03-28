@@ -18,7 +18,8 @@ public class Warriror extends Unit{
     void setInitialAbilities(Campaign campaign) {
         campaign.character.abilities.add("Strong Attack");
         campaign.character.abilities.add("Exit");
-}
+        this.subtractHealth(8);
+    }
 
     @Override
     void setUnitName() {

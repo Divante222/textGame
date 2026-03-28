@@ -139,6 +139,10 @@ public abstract class Unit {
         this.health = constitutionMultiplier * constitution;
     }
 
+    public void addHealth(int healthToAdd) {
+        this.health += healthToAdd;
+    }
+
     public void subtractHealth(int healthToSubtract){
         this.health -= healthToSubtract;
     }

@@ -27,7 +27,7 @@ public class CombatChoices{
             character.addToDefendingTurnCount();
         }
         while(playerAttacking){
-            String playerCombatChoice = playerCombatText();
+            String playerCombatChoice = playerCombatText(campaign);
             if(playerCombatChoice.equals("1")){
                 monsterEncountered = playerRegularAttack(monsterEncountered, character);
                 playerAttacking = false;
@@ -47,6 +47,7 @@ public class CombatChoices{
                         System.out.println("Player is using Ability");
                         System.out.println("Select an ability to use: ");
                         Menu.defaultSelectionMenu(character.abilities);
+                        Menu.showHpAndMana(campaign);
                         abilitySelected = sc.nextLine();
                         try {
                             abilityUsed = character.abilities.get(Integer.parseInt(abilitySelected) - 1);
@@ -75,7 +76,7 @@ public class CombatChoices{
                     }
                 }
             } else if(playerCombatChoice.equals("4")){
-                Menu.menuInCombat(character, sc);
+                Menu.menuInCombat(character, sc, campaign);
                 combatChoices.listMonstersEncountered(monsterEncountered);
             } else if (playerCombatChoice.equals("5")){
                 Menu.shopMenuAfterLevel(character, sc);
@@ -187,7 +188,7 @@ public class CombatChoices{
         return character;
     }
 
-    public String playerCombatText(){
+    public String playerCombatText(Campaign campaign){
         int iteration = 1;
         System.out.println("Make your move");
         System.out.println("==========================================================================================");
@@ -196,6 +197,7 @@ public class CombatChoices{
             iteration +=1;
         }
         System.out.println("\n==========================================================================================\n");
+        Menu.showHpAndMana(campaign);
         System.out.print("Selection: ");
         String playerCombatChoice = sc.nextLine();
         System.out.println();
