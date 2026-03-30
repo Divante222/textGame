@@ -41,27 +41,35 @@ public class CombatChoices{
                 while(playerUsingAbility.equals("KeepGoing")){
 
                     String abilitySelected;
-                    String abilityUsed;
+                    // String abilityUsed;
 
+                    List<String> abilityMoveSet = new ArrayList<>(campaign.abilityList.keySet());
+                    for(String abilitiesListed : abilityMoveSet){
+                        System.out.println("Ability listed:: " + abilitiesListed);
+                    }
+                    
                     while(true){
                         System.out.println("Player is using Ability");
                         System.out.println("Select an ability to use: ");
-                        Menu.defaultSelectionMenu(character.abilities);
-                        Menu.showHpAndMana(campaign);
-                        abilitySelected = sc.nextLine();
+
                         try {
-                            abilityUsed = character.abilities.get(Integer.parseInt(abilitySelected) - 1);
+                            Menu.defaultSelectionMenu(abilityMoveSet);
+                            Menu.showHpAndMana(campaign);
+                            abilitySelected = sc.nextLine();
+
+                            playerUsingAbility = campaign.abilityList.get(abilityMoveSet.get(Integer.parseInt(abilitySelected) - 1)).call();
+
                             break;
                         } catch (Exception e) {
                             CommonText.enterValidSelection();
                             campaign.sc.nextLine();
                         }
                     }
-                    
-                    Ability abilityclass = new Ability(campaign, abilityUsed);
-                    combatChoices.listMonstersEncountered(monsterEncountered);
-                    playerUsingAbility = abilityclass.abilityExecution(abilityUsed);
 
+                    combatChoices.listMonstersEncountered(monsterEncountered);
+
+                    System.out.println("playerUsingAbility: " + playerUsingAbility);
+                    
                     switch (playerUsingAbility) {
                         case "SuccessfulAttack":
                             playerAttacking = false;

@@ -1,8 +1,11 @@
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 
 public class Campaign {
 
@@ -15,11 +18,17 @@ public class Campaign {
     public Random randomNumber = new Random();
 
     public List<Unit> monsterEncountered = new ArrayList<>();
+
+    public Map<String, Callable<String>> abilityList = new LinkedHashMap<>();
+
     public boolean fightStart = true;
 
     public Unit character;
 
     ItemUsage itemUsage;
+
+    // Ability ability = new Ability(this);
+    Ability abilityclass = new Ability(this);
 
     // KeyPressed keyPressed = new KeyPressed();
 
@@ -33,13 +42,16 @@ public class Campaign {
     public Campaign(Unit character){
         this();
         this.character = character;
+        abilityList = this.character.setInitialAbilities(abilityclass, abilityList);
     }
 
     public void campaignStart(){
         System.out.println("This is the start of a series of 10 fights\n");
         System.out.println("Press enter to continue.");
         sc.nextLine();
-        character.setInitialAbilities(this);
+
+        abilityList = character.setInitialAbilities(this.abilityclass, this.abilityList);
+
         while (routeLevel < 11) { 
             setupCampaign();
             
@@ -49,7 +61,6 @@ public class Campaign {
                 if(monsterEncountered.size() > 0 ){
 
                     combatChoices.listMonstersEncountered(monsterEncountered);
-
                     this.monsterEncountered = combatChoices.getPlayerCombatChoices(monsterEncountered, character, this, combatChoices);
                     if(monsterEncountered.size() > 0){
                         character = combatChoices.enemyAttacks(monsterEncountered, character);

@@ -1,3 +1,6 @@
+import java.util.Map;
+import java.util.concurrent.Callable;
+
 public class Goblin extends Unit{
 
     private String name;
@@ -10,9 +13,9 @@ public class Goblin extends Unit{
     }
 
     @Override
-    void setInitialAbilities(Campaign campaign) {
-        // abilities.add("Sneaky Stab");
-        System.out.print("");
+    Map<String, Callable<String>> setInitialAbilities(Ability ability, Map<String, Callable<String>> abilityList){
+        abilityList.put("Sneaky Stab", () -> ability.strongAttackExecution());
+        return abilityList;
     }
 
     @Override

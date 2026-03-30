@@ -1,10 +1,18 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.Callable;
 
 public abstract class Unit {
     TreeMap<String, Integer> items = new TreeMap<>();
-    List<String> abilities = new ArrayList<>();
+
+
+
+
+    // List<String> abilities = new ArrayList<>();
+
+
+
+
 
     private String name;
     private int experience = 0;
@@ -39,8 +47,8 @@ public abstract class Unit {
     private boolean alive = true;
     private boolean defending = false;
     private boolean parried = false;
-
-    abstract void setInitialAbilities(Campaign campaign);
+    
+    abstract Map<String, Callable<String>> setInitialAbilities(Ability ability, Map<String, Callable<String>> abilityList);
     abstract void setUnitName();
     abstract void initializeUpperDamageLimit();
 
@@ -53,10 +61,6 @@ public abstract class Unit {
         if(items.get(itemToRemove) == 0){
             items.remove(itemToRemove);
         }
-    }
-
-    public void addAbility(String abilityToAdd){
-        abilities.remove(abilityToAdd);
     }
 
     public int getStrength(){
@@ -297,4 +301,15 @@ public abstract class Unit {
     public void setAbilityPoints(int abilityPoints) {
         this.abilityPoints = abilityPoints;
     }
+
+    // public String abilityExecution(Map<String, Runnable> abilityList){
+    //     // try {
+    //     //     abilityList.get()
+    //     // } catch (Exception e) {
+    //     // }
+    //     // case "Strong Attack":
+    //     //             strongAttackExecution();
+    //     //             return "SuccessfulAttack";
+    //     return "";
+    // }
 }
