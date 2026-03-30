@@ -41,7 +41,6 @@ public class CombatChoices{
                 while(playerUsingAbility.equals("KeepGoing")){
 
                     String abilitySelected;
-                    // String abilityUsed;
 
                     List<String> abilityMoveSet = new ArrayList<>(campaign.abilityList.keySet());
                     for(String abilitiesListed : abilityMoveSet){
@@ -56,9 +55,7 @@ public class CombatChoices{
                             Menu.defaultSelectionMenu(abilityMoveSet);
                             Menu.showHpAndMana(campaign);
                             abilitySelected = sc.nextLine();
-
                             playerUsingAbility = campaign.abilityList.get(abilityMoveSet.get(Integer.parseInt(abilitySelected) - 1)).call();
-
                             break;
                         } catch (Exception e) {
                             CommonText.enterValidSelection();
@@ -67,8 +64,6 @@ public class CombatChoices{
                     }
 
                     combatChoices.listMonstersEncountered(monsterEncountered);
-
-                    System.out.println("playerUsingAbility: " + playerUsingAbility);
                     
                     switch (playerUsingAbility) {
                         case "SuccessfulAttack":

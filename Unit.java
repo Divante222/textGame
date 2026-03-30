@@ -155,8 +155,8 @@ public abstract class Unit {
         return mana;
     }
 
-    public void setMana() {
-        this.mana = willpower * willpowerMultiplier;
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 
     public void addExperience(int experienceAmount){
