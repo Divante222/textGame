@@ -15,6 +15,7 @@ public class Warriror extends Unit{
         setLevel(1);
         setAbilityPoints(1);
         setInitialItems();
+        initializeHelmets();
     }
 
     @Override
@@ -46,5 +47,9 @@ public class Warriror extends Unit{
 
     public void setInitialItems(){
         this.items.put("potion", 3);
+    }
+
+    public void initializeHelmets(){
+        this.equipmentList.get("Helmet").add(new EquipmentStats("Old torn Leather Helmet", "Str", 0, "Purely for the looks"));
     }
 }

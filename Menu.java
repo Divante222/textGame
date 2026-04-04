@@ -2,7 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class Menu {
+    static Scanner sc = new Scanner(System.in);
 
     public static List<String> defaultSelectionMenu(List<String> menuOptions){
         int iteration = 1;
@@ -100,7 +102,32 @@ public class Menu {
                             sc.nextLine();
                             break;
                         case "3":
-                            System.out.println("Equipment");
+                            List<String> equipmentTypes = new ArrayList<>(List.of("Helmet", "Chest", "Legs", "Hands", "Feet", "MainHand", "OffHand", "Current Equipment Check"));
+                    
+                            while (true) { 
+                                Menu.defaultSelectionMenu(equipmentTypes);
+                                System.out.println("Select an opiton or press 0 to exit");
+                                String equipmentTypeSelection = sc.nextLine();
+                                if(equipmentTypeSelection.equals("0")){
+                                    return;
+                                }
+                                try {
+                                    List<Unit.EquipmentStats> equipmentStatsList = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection)));
+                                    for(Unit.EquipmentStats equipmentStatsIndividual : equipmentStatsList){
+                                        System.out.println("Equipment Name: " + equipmentStatsIndividual.equipmentName());
+                                        System.out.println("Stat Modified: " + equipmentStatsIndividual.statModified());
+                                        System.out.println("Amount Owned: " + equipmentStatsIndividual.amount());
+                                        System.out.println("Description: " + equipmentStatsIndividual.toString());
+                                    }
+                                    break;
+                                } catch (Exception e) {
+                                    CommonText.enterValidSelection();
+                                    System.out.println("Press enter to continue...");
+                                    sc.nextLine();
+                                }               
+                            }
+                            System.out.println("Press enter to continue...");
+                            sc.nextLine();
                             break;
                         case "4":
                             Boolean continueAtributeSelection = true;

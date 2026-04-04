@@ -1,19 +1,62 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
 public abstract class Unit {
+
+    public TreeMap<String, List<EquipmentStats>> equipmentList = new TreeMap<>();
     TreeMap<String, Integer> items = new TreeMap<>();
 
+    public Unit() {
+        equipmentList.putAll(Map.of(
+            "Helmet", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack a helmet")
+                    )
+                ),
+                "Chest", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack Chest armor")
+                    )
+                ),
+                "Legs", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack Leg armor")
+                    )
+                ),
+                "Hands", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack Hand armor")
+                    )
+                ),
+                "Feet", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack foot armor")
+                    )
+                ),
+                "MainHand", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack a Main hand weapon")
+                    )
+                ),
+                "OffHand", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack a Off Hand tool")
+                    )
+                )
+            )
+        );
+    }
 
-
-
-    // List<String> abilities = new ArrayList<>();
-
-
-
-
-
+    public static record EquipmentStats(String equipmentName, String statModified, int amount, String description){
+        @Override
+        public final String toString() {
+            return description;
+        }
+    }
+    
     private String name;
     private int experience = 0;
     private int experienceThreshold;
