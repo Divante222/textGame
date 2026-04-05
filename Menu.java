@@ -145,18 +145,57 @@ public class Menu {
                                             } 
                                             
                                             int indexOfOldRecord = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).indexOf(equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1));
-                                            campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).set(indexOfOldRecord, 
-                                                new Unit.EquipmentStats(equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).equipmentName(), equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).statModified(), 
-                                                equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).amount() - 1, equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).description()));
-                                        
                                             
-                                            campaign.character.currentlyEquiped.put(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1), 
-                                            new Unit.EquipmentStats(campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).equipmentName(), 
-                                                campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).statModified(), 
-                                                (campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).amount() + 1), 
-                                                campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).description()));
+                                            String equipmentName = equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).equipmentName();
+                                            String statModified = equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).statModified();
+                                            int newItemAmount = equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).amount() - 1;
+                                            String display = equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).description();
 
-                                                break;
+                                            // subtracting amount by 1 on the record given by the user 
+                                            // deletes from the main list
+                                            campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).set(indexOfOldRecord, 
+                                                new Unit.EquipmentStats(equipmentName, statModified, newItemAmount, display));
+
+
+
+
+                                            for(int i = 0; i < campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).size(); i++){
+                                                String equipNameFromEquipped = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).get(i).equipmentName();
+                                                String currentlyEquipedToCompareTo = campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).equipmentName();
+                                                // int indexToCheck = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).indexOf(i);
+                                                if(equipNameFromEquipped.equals(currentlyEquipedToCompareTo)){
+                                                    String statModifiedFromEquipped = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).get(i).statModified();
+                                                    int amountFromEquipped = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).get(i).amount() + 1;
+                                                    String descriptionFromEquipped = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).get(i).description();
+                                                    
+                                                    campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).set(i, 
+                                                        new Unit.EquipmentStats(
+                                                            equipNameFromEquipped,
+                                                            statModifiedFromEquipped,
+                                                            amountFromEquipped,
+                                                            descriptionFromEquipped
+                                                        )
+                                                    );
+
+                                                }
+                                            }
+
+
+                                            // the old equipment
+                                            campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1));
+
+                                            String equipmentNameCurrent = campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).equipmentName();
+                                            String statModifiedCurrent = campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).statModified();
+                                            int newItemAmountCurrent = campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).amount() + 1;
+                                            String displayCurrent = campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).description();
+                                            
+                                            // updates the equiped items to add the users selection.
+                                            campaign.character.currentlyEquiped.put(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1), 
+                                            new Unit.EquipmentStats(equipmentNameCurrent, statModifiedCurrent, newItemAmountCurrent, displayCurrent));
+
+
+
+                                            break;
                                         } catch (Exception e) {
                                             CommonText.enterValidSelection();
                                             System.out.println("Press enter to continue...");
