@@ -7,47 +7,12 @@ import java.util.concurrent.Callable;
 public abstract class Unit {
 
     public TreeMap<String, List<EquipmentStats>> equipmentList = new TreeMap<>();
+    public TreeMap<String, EquipmentStats> currentlyEquiped = new TreeMap<>();
     TreeMap<String, Integer> items = new TreeMap<>();
 
     public Unit() {
-        equipmentList.putAll(Map.of(
-            "Helmet", new ArrayList<>(
-                    List.of(
-                        new EquipmentStats("None", "No stat modified", 1, "You lack a helmet")
-                    )
-                ),
-                "Chest", new ArrayList<>(
-                    List.of(
-                        new EquipmentStats("None", "No stat modified", 1, "You lack Chest armor")
-                    )
-                ),
-                "Legs", new ArrayList<>(
-                    List.of(
-                        new EquipmentStats("None", "No stat modified", 1, "You lack Leg armor")
-                    )
-                ),
-                "Hands", new ArrayList<>(
-                    List.of(
-                        new EquipmentStats("None", "No stat modified", 1, "You lack Hand armor")
-                    )
-                ),
-                "Feet", new ArrayList<>(
-                    List.of(
-                        new EquipmentStats("None", "No stat modified", 1, "You lack foot armor")
-                    )
-                ),
-                "MainHand", new ArrayList<>(
-                    List.of(
-                        new EquipmentStats("None", "No stat modified", 1, "You lack a Main hand weapon")
-                    )
-                ),
-                "OffHand", new ArrayList<>(
-                    List.of(
-                        new EquipmentStats("None", "No stat modified", 1, "You lack a Off Hand tool")
-                    )
-                )
-            )
-        );
+        initializeEquipmentList();
+        equipEmptyDefault();
     }
 
     public static record EquipmentStats(String equipmentName, String statModified, int amount, String description){
@@ -345,14 +310,56 @@ public abstract class Unit {
         this.abilityPoints = abilityPoints;
     }
 
-    // public String abilityExecution(Map<String, Runnable> abilityList){
-    //     // try {
-    //     //     abilityList.get()
-    //     // } catch (Exception e) {
-    //     // }
-    //     // case "Strong Attack":
-    //     //             strongAttackExecution();
-    //     //             return "SuccessfulAttack";
-    //     return "";
-    // }
+    public void initializeEquipmentList(){
+        equipmentList.putAll(Map.of(
+            "Helmet", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack a helmet")
+                    )
+                ),
+                "Chest", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack Chest armor")
+                    )
+                ),
+                "Legs", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack Leg armor")
+                    )
+                ),
+                "Hands", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack Hand armor")
+                    )
+                ),
+                "Feet", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack foot armor")
+                    )
+                ),
+                "MainHand", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack a Main hand weapon")
+                    )
+                ),
+                "OffHand", new ArrayList<>(
+                    List.of(
+                        new EquipmentStats("None", "No stat modified", 1, "You lack a Off Hand tool")
+                    )
+                )
+            )
+        );
+    }
+
+    public void equipEmptyDefault(){
+        for(String equipmentCatagory : equipmentList.keySet()){
+            for(EquipmentStats nakedEquipment : equipmentList.get(equipmentCatagory)){
+                currentlyEquiped.put(equipmentCatagory, nakedEquipment);
+                int indexOfOldRecord = equipmentList.get(equipmentCatagory).indexOf(nakedEquipment);
+                equipmentList.get(equipmentCatagory).set(indexOfOldRecord, 
+                    new EquipmentStats(nakedEquipment.equipmentName(), nakedEquipment.statModified(), nakedEquipment.amount() -1, nakedEquipment.description()));
+            }
+        }
+    }
+    
 }

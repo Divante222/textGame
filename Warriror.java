@@ -6,6 +6,7 @@ public class Warriror extends Unit{
     private String name;
 
     public Warriror() {
+        super();
         this.setConstitution(5);
         this.setHealth();
         this.setStrength(2);
@@ -50,6 +51,7 @@ public class Warriror extends Unit{
     }
 
     public void initializeHelmets(){
-        this.equipmentList.get("Helmet").add(new EquipmentStats("Old torn Leather Helmet", "Str", 0, "Purely for the looks"));
+        this.equipmentList.get("Helmet").add(new EquipmentStats("Old torn Leather Helmet", "Str", 1, "Purely for the looks"));
+        System.out.println("added a helmet");
     }
 }

@@ -111,14 +111,60 @@ public class Menu {
                                 if(equipmentTypeSelection.equals("0")){
                                     return;
                                 }
+
+
                                 try {
-                                    List<Unit.EquipmentStats> equipmentStatsList = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection)));
+                                    int equipmentNumber = 1;
+                                    List<Unit.EquipmentStats> equipmentStatsList = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1));
+                                    Unit.EquipmentStats equipmentInformation;
+
+
+                                    
+
+
+
                                     for(Unit.EquipmentStats equipmentStatsIndividual : equipmentStatsList){
-                                        System.out.println("Equipment Name: " + equipmentStatsIndividual.equipmentName());
-                                        System.out.println("Stat Modified: " + equipmentStatsIndividual.statModified());
-                                        System.out.println("Amount Owned: " + equipmentStatsIndividual.amount());
-                                        System.out.println("Description: " + equipmentStatsIndividual.toString());
+                                        System.out.println("\nTesting: " + equipmentStatsIndividual.description() + "\n");
+
+                                        // if(equipmentStatsIndividual.amount() >= 1){
+                                            System.out.println("Equipment Number: " + equipmentNumber);
+                                            System.out.println("Equipment Name: " + equipmentStatsIndividual.equipmentName());
+                                            System.out.println("Stat Modified: " + equipmentStatsIndividual.statModified());
+                                            System.out.println("Amount Owned: " + equipmentStatsIndividual.amount());
+                                            System.out.println("Description: " + equipmentStatsIndividual.toString() + "\n");
+                                            equipmentNumber += 1;
+                                        // }
                                     }
+                                    while (true) { 
+                                        try {
+                                            System.out.println("Select an piece of equipment to equip or press 0 to exit");
+                                            String equipmentToEquip = sc.nextLine();
+
+                                            if(equipmentToEquip.equals("0")){
+                                                return;
+                                            } 
+                                            
+                                            int indexOfOldRecord = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).indexOf(equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1));
+                                            campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).set(indexOfOldRecord, 
+                                                new Unit.EquipmentStats(equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).equipmentName(), equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).statModified(), 
+                                                equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).amount() - 1, equipmentStatsList.get(Integer.parseInt(equipmentToEquip)-1).description()));
+                                        
+                                            
+                                            campaign.character.currentlyEquiped.put(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1), 
+                                            new Unit.EquipmentStats(campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).equipmentName(), 
+                                                campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).statModified(), 
+                                                (campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).amount() + 1), 
+                                                campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).description()));
+
+                                                break;
+                                        } catch (Exception e) {
+                                            CommonText.enterValidSelection();
+                                            System.out.println("Press enter to continue...");
+                                            sc.nextLine();
+                                        }
+                                    }
+                                    
+                                    
                                     break;
                                 } catch (Exception e) {
                                     CommonText.enterValidSelection();
