@@ -118,22 +118,15 @@ public class Menu {
                                     List<Unit.EquipmentStats> equipmentStatsList = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1));
                                     Unit.EquipmentStats equipmentInformation;
 
-
-                                    
-
-
-
                                     for(Unit.EquipmentStats equipmentStatsIndividual : equipmentStatsList){
                                         System.out.println("\nTesting: " + equipmentStatsIndividual.description() + "\n");
-
-                                        // if(equipmentStatsIndividual.amount() >= 1){
                                             System.out.println("Equipment Number: " + equipmentNumber);
                                             System.out.println("Equipment Name: " + equipmentStatsIndividual.equipmentName());
                                             System.out.println("Stat Modified: " + equipmentStatsIndividual.statModified());
                                             System.out.println("Amount Owned: " + equipmentStatsIndividual.amount());
                                             System.out.println("Description: " + equipmentStatsIndividual.toString() + "\n");
                                             equipmentNumber += 1;
-                                        // }
+                                       
                                     }
                                     while (true) { 
                                         try {
@@ -156,13 +149,10 @@ public class Menu {
                                             campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).set(indexOfOldRecord, 
                                                 new Unit.EquipmentStats(equipmentName, statModified, newItemAmount, display));
 
-
-
-
                                             for(int i = 0; i < campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).size(); i++){
                                                 String equipNameFromEquipped = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).get(i).equipmentName();
                                                 String currentlyEquipedToCompareTo = campaign.character.currentlyEquiped.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).equipmentName();
-                                                // int indexToCheck = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).indexOf(i);
+                                            
                                                 if(equipNameFromEquipped.equals(currentlyEquipedToCompareTo)){
                                                     String statModifiedFromEquipped = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).get(i).statModified();
                                                     int amountFromEquipped = campaign.character.equipmentList.get(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1)).get(i).amount() + 1;
@@ -192,8 +182,6 @@ public class Menu {
                                             // updates the equiped items to add the users selection.
                                             campaign.character.currentlyEquiped.put(equipmentTypes.get(Integer.parseInt(equipmentTypeSelection) - 1), 
                                             new Unit.EquipmentStats(equipmentNameCurrent, statModifiedCurrent, newItemAmountCurrent, displayCurrent));
-
-
 
                                             break;
                                         } catch (Exception e) {
