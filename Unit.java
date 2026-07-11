@@ -17,7 +17,7 @@ public abstract class Unit {
 
     public static record EquipmentStats(String equipmentName, String statModified, int amount, String description){
         @Override
-        public final String toString() {
+        public String toString() {
             return description;
         }
     }
