@@ -4,7 +4,7 @@
     {
       "label": "Auto-run Game",
       "type": "shell",
-      "command": "java java Main",
+      "command": "java Main.java",
       "runOptions": {
         "runOn": "folderOpen"
       },
